@@ -23,14 +23,14 @@ const db = knex({
 });
 
 
-pg.connect();
+knex.connect();
 
-pg.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+knex.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
   if (err) throw err;
   for (let row of res.rows) {
     console.log(JSON.stringify(row));
   }
-  pg.end();
+  knex.end();
 });
 
 const app = express();
