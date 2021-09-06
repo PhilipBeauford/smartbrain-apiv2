@@ -23,16 +23,6 @@ const db = knex({
 });
 
 
-knex.connect();
-
-knex.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  knex.end();
-});
-
 const app = express();
 
 app.use(cors())
