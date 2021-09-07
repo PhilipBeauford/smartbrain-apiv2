@@ -15,7 +15,7 @@ const image = require('./controllers/image');
 const db = knex({
   client: 'pg',
   connection: {
-    connectionString: process.env.DATABASE_URL,
+    host: process.env.DATABASE_URL,
     ssl: {
     rejectUnauthorized: false,
     },
@@ -27,8 +27,8 @@ const app = express();
 
 app.use(cors())
 app.use(bodyParser.json());
-//Main body
 
+//Main body- ROUTES
 app.get('/', (req, res) => { res.send('it is working!') })
 app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
 app.post("/register", (req, res) => { register.handleRegister(req, res, db, bcrypt) })
