@@ -16,10 +16,8 @@ const db = knex({
   client: 'pg',
   connection: {
     connectionString: process.env.DATABASE_URL,
-    ssl: {
-    rejectUnauthorized: false,
-    },
-    },
+    ssl: true
+    }
 });
 
 
@@ -36,14 +34,8 @@ app.post("/register", (req, res) => { register.handleRegister(req, res, db, bcry
 app.get("/profile/:id", (req, res) => { profile.handleProfileGet(req, res, db) })
 app.put("/image", (req, res) => { image.handleImage(req, res, db) })
 
-app.listen(process.env.PORT || 3001, () => { console.log("app is running on port ${process.env.PORT}"); });
+app.listen(process.env.PORT || 3001, () => { 
+  console.log("app is running on port ${process.env.PORT}"); 
+})
 
 
-if (process.env.NODE_ENV === 'production') {
-	app.use(express.static('client/build'));
-}
-
-
-app.get('*', (req, res) => {
-	res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
