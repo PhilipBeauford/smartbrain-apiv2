@@ -15,8 +15,10 @@ const image = require('./controllers/image');
 const db = knex({
   client: 'pg',
   connection: {
-    host: process.env.DATABASE_URL,
-    ssl: true
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+    rejectUnauthorized: false,
+    },
     },
 });
 
@@ -27,7 +29,7 @@ app.use(cors())
 app.use(bodyParser.json());
 
 //Main body- ROUTES
-app.get('/', (req, res) => { res.send('it is working!') })
+app.get('/', (req, res) => { res.send(req, 'it is working!') })
 app.post('/signin', (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
 app.post("/register", (req, res) => { register.handleRegister(req, res, db, bcrypt) })
 app.get("/profile/:id", (req, res) => { profile.handleProfileGet(req, res, db) })
