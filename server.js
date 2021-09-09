@@ -15,8 +15,10 @@ const image = require('./controllers/image');
 const db = knex({
   client: 'pg',
   connection: {
-    connectionString: process.env.DATABASE_URL,
-    ssl: true
+    host: process.env.DATABASE_URL,
+    ssl: {
+    rejectUnauthorized: false,
+    }
     }
 });
 
@@ -24,7 +26,7 @@ const db = knex({
 const app = express();
 
 app.use(cors())
-app.use(bodyParser.json());
+app.use(express.json());
 
 //Main body- ROUTES
 app.get('/', (req, res) => { res.send('Success!')})
